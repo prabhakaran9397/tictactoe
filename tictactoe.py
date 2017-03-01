@@ -77,6 +77,26 @@ def normalAlgo(openSet):
 	return easyAlgo(openSet)
 
 def hardAlgo(openSet):
+	bC = booleanize(Grid, Computer)
+	for i in range(3):
+		if((~(bC[i][0]^bC[i][1]^bC[i][2]))&(bC[i][0]|bC[i][1]|bC[i][2])):
+			for j in range(3):
+				if bC[i][j] == 0 and i*3+j in openSet:
+					return i*3+j
+		if((~(bC[0][i]^bC[1][i]^bC[2][i]))&(bC[0][i]|bC[1][i]|bC[2][i])):
+			for j in range(3):
+				if bC[j][i] == 0 and j*3+i in openSet:
+					return j*3+i
+
+	if((~(bC[0][0]^bC[1][1]^bC[2][2]))&(bC[0][0]|bC[1][1]|bC[2][2])):
+			for j in range(3):
+				if bC[j][j] == 0 and j*3+j in openSet:
+					return j*3+j
+	if((~(bC[0][2]^bC[1][1]^bC[2][0]))&(bC[0][2]|bC[1][1]|bC[2][0])):
+			for j in range(3):
+				if bC[j][2-j] == 0 and j*3+2-j in openSet:
+					return j*3+2-j
+
 	bH = booleanize(Grid, Human)
 	for i in range(3):
 		if((~(bH[i][0]^bH[i][1]^bH[i][2]))&(bH[i][0]|bH[i][1]|bH[i][2])):
@@ -96,7 +116,28 @@ def hardAlgo(openSet):
 			for j in range(3):
 				if bH[j][2-j] == 0 and j*3+2-j in openSet:
 					return j*3+2-j
+
+	bC = booleanize(Grid, Computer)
+	for i in range(3):
+		if((bC[i][0]^bC[i][1]^bC[i][2])&(~(bC[i][0]|bC[i][1]|bC[i][2]))):
+			for j in range(3):
+				if bC[i][j] == 0 and i*3+j in openSet:
+					return i*3+j
+		if((bC[0][i]^bC[1][i]^bC[2][i])&(~(bC[0][i]|bC[1][i]|bC[2][i]))):
+			for j in range(3):
+				if bC[j][i] == 0 and j*3+i in openSet:
+					return j*3+i
+
+	if((bC[0][0]^bC[1][1]^bC[2][2])&(~(bC[0][0]|bC[1][1]|bC[2][2]))):
+			for j in range(3):
+				if bC[j][j] == 0 and j*3+j in openSet:
+					return j*3+j
+	if((bC[0][2]^bC[1][1]^bC[2][0])&(~(bC[0][2]|bC[1][1]|bC[2][0]))):
+			for j in range(3):
+				if bC[j][2-j] == 0 and j*3+2-j in openSet:
+					return j*3+2-j
 	return easyAlgo(openSet)
+
 
 def getValComp(openSet):
 	Algo = {
